@@ -7,13 +7,13 @@ function App() {
 	return (
 		<Stack
 			sx={{
-				height: "100vh",
+				height: "100%",
 				overflow: "hidden",
 			}}>
-			<Box sx={{ padding: 2, paddingTop: 4 }}>
+			<Box sx={{ padding: 5 }}>
 				<motion.h1
-					initial={{ y: -50, opacity: 0 }}
-					animate={{ y: 0, opacity: 1 }}
+					initial={{ y: -100, opacity: 0 }}
+					animate={{ y: -50, opacity: 1 }}
 					transition={{ duration: 1.5, ease: "easeInOut" }}
 					style={{
 						textAlign: "center",
@@ -28,7 +28,7 @@ function App() {
 					display: "flex",
 					alignItems: "center",
 					justifyContent: "center",
-					padding: 2,
+					padding: 5,
 				}}>
 				<motion.img
 					src="src/assets/tickets.png"
