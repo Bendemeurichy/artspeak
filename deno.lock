@@ -13,6 +13,7 @@
     "npm:motion@^12.28.1": "12.28.1_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:react-dom@^19.2.1": "19.2.3_react@19.2.3",
     "npm:react@^19.2.1": "19.2.3",
+    "npm:tts-react@^4.1.2": "4.1.2_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:vite@*": "7.3.1_picomatch@4.0.3",
     "npm:vite@^7.2.7": "7.3.1_picomatch@4.0.3"
   },
@@ -1127,6 +1128,13 @@
     "tslib@2.8.1": {
       "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
     },
+    "tts-react@4.1.2_react@19.2.3_react-dom@19.2.3__react@19.2.3": {
+      "integrity": "sha512-QMXBE/7tCTi3T/1wGMUZj6qxi5SyrWBDzDCEO/H0nrGa4NDXctaGVFkRoo4deOjGiHZzDKgqvalRQFvjlzzqPw==",
+      "dependencies": [
+        "react",
+        "react-dom"
+      ]
+    },
     "update-browserslist-db@1.2.3_browserslist@4.28.1": {
       "integrity": "sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w==",
       "dependencies": [
@@ -1172,6 +1180,7 @@
       "npm:motion@^12.28.1",
       "npm:react-dom@^19.2.1",
       "npm:react@^19.2.1",
+      "npm:tts-react@^4.1.2",
       "npm:vite@^7.2.7"
     ]
   }

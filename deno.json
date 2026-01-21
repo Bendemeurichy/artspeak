@@ -24,6 +24,7 @@
     "motion": "npm:motion@^12.28.1",
     "react": "npm:react@^19.2.1",
     "react-dom": "npm:react-dom@^19.2.1",
+    "tts-react": "npm:tts-react@^4.1.2",
     "vite": "npm:vite@^7.2.7"
   }
 }
