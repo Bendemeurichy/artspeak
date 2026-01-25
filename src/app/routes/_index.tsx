@@ -1,9 +1,16 @@
-import "./App.css";
-import { motion } from "motion/react";
+import type { MetaFunction } from "react-router";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import { motion } from "motion/react";
 
-function App() {
+import ticketImage from "../../assets/tickets.png";
+
+export const meta: MetaFunction = () => [
+  { title: "ArtSpeak" },
+  { name: "description", content: "Discover art events with ArtSpeak" },
+];
+
+export default function IndexRoute() {
   return (
     <Stack
       sx={{
@@ -35,7 +42,7 @@ function App() {
         }}
       >
         <motion.img
-          src="src/assets/tickets.png"
+          src={ticketImage}
           alt="ticket"
           initial={{ x: -1000, rotate: 0, opacity: 0 }}
           animate={{ x: 0, rotate: 20, opacity: 1 }}
@@ -51,5 +58,3 @@ function App() {
     </Stack>
   );
 }
-
-export default App;
