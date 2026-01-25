@@ -74,10 +74,12 @@ export default function IndexRoute() {
           style={{
             display: "flex",
             flexDirection: "row",
-            maxWidth: "80%",
+            alignItems: "center",
+            justifyContent: "center",
+            maxWidth: "min(90%, 640px)",
+            width: "100%",
             maxHeight: "70vh",
             height: "auto",
-            objectFit: "contain",
             cursor: isRouting ? "default" : "pointer",
             userSelect: "none",
             outline: "none",
@@ -87,12 +89,12 @@ export default function IndexRoute() {
           <motion.img
             src={ticketImageLeft}
             alt="ticket"
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: "none" , width: "50%", height: "auto"}}
           />
           <motion.img
             src={ticketImageRight}
             alt="ticket"
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: "none" , width: "21%", height: "auto"}}
             animate={
               isRouting
                 ? { x: 250, rotate: 10, opacity: 0 }
