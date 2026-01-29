@@ -6,15 +6,16 @@ import {
   useRouteError,
 } from "react-router";
 import {
-  Alert,
-  CircularProgress,
-  Container,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Stack,
-  Typography,
+	Alert,
+	Card,
+	CardContent,
+	CardMedia,
+	CircularProgress,
+	Container,
+	List,
+	ListItem,
+	Stack,
+	Typography,
 } from "@mui/material";
 
 const JSON_URL = "/data/data.json";
@@ -67,27 +68,51 @@ export default function OverviewRoute() {
     );
   }
 
-  return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Stack spacing={2}>
-        <Typography variant="h4" component="h1">
-          JSON Items
-        </Typography>
-        <List>
-          {items.map((item) => (
-            <ListItem key={item.id} disablePadding divider>
-              <ListItemButton component={Link} to={`${item.id}`}>
-                <ListItemText
-                  primary={item.name ?? `Item ${item.id}`}
-                  secondary={item.imagePath}
+	return (
+		<Container maxWidth="md" sx={{ py: 4 }}>
+			<Stack spacing={2}>
+				<Typography variant="h4" component="h1">
+					Galerij
+				</Typography>
+				<List>
+					{items.map((item) => (
+						<ListItem
+							key={item.id}
+							divider
+							sx={{ width: "100%" }}>
+							<Card
+								sx={{ 
+                  width: "100%", 
+                  backgroundColor: "ivory",
+                  border: "1px solid #ccc",
+                }}
+								component={Link}
+								to={`${item.id}`}>
+								<CardMedia
+                  component="img"
+                  sx={{
+                    height: 250,
+                    objectFit: "contain",
+                    padding: 2,
+                  }}
+                  image={item.imagePath}
+                  alt={item.name}
                 />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Stack>
-    </Container>
-  );
+								<CardContent>
+									<Typography
+										gutterBottom
+										variant="h5"
+										component="div">
+										{item.name}
+									</Typography>
+								</CardContent>
+							</Card>
+						</ListItem>
+					))}
+				</List>
+			</Stack>
+		</Container>
+	);
 }
 
 export function HydrateFallback() {

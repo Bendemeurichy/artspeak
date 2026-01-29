@@ -2,6 +2,16 @@
   {
     "id": 1,
     "name": "schildersezel",
-    "imagePath": "path/to/image.jpg"
+    "imagePath": "https://images.icon-icons.com/1143/PNG/512/painteaseloutlineartistictool_80738.png"
+  },
+  {
+    "id": 2,
+    "name": "Penseel",
+    "imagePath": "https://cdn-icons-png.freepik.com/512/1150/1150899.png"
+  },
+  {
+    "id": 3,
+    "name": "Verfpalet",
+    "imagePath": "https://cdn-icons-png.freepik.com/512/25/25597.png"
   }
 ]
