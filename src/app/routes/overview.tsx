@@ -17,6 +17,7 @@ import {
 	Stack,
 	Typography,
 } from "@mui/material";
+import backgroundImage from "../../assets/brick_wall.png";
 
 const JSON_URL = "/data/data.json";
 
@@ -69,9 +70,15 @@ export default function OverviewRoute() {
   }
 
 	return (
-		<Container maxWidth="md" sx={{ py: 4 }}>
+		<Container maxWidth="md" sx={{ 
+                py: 4,
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundRepeat: "repeat",
+                backgroundSize: "auto",
+            }}
+      >
 			<Stack spacing={2}>
-				<Typography variant="h4" component="h1">
+				<Typography variant="h4" component="h1" color="white">
 					Galerij
 				</Typography>
 				<List>
