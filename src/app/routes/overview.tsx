@@ -87,7 +87,7 @@ export default function OverviewRoute() {
                   border: "1px solid #ccc",
                 }}
 								component={Link}
-								to={`${item.id}`}>
+								to={`/detail/${item.id}`}>
 								<CardMedia
                   component="img"
                   sx={{
