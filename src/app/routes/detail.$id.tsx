@@ -8,6 +8,8 @@ export default function OverviewDetailRoute() {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    
+
     return (
         <Container 
             maxWidth="md"
@@ -26,7 +28,7 @@ export default function OverviewDetailRoute() {
             >
                 Back
             </Button>
-            <h1>Overview Detail Route</h1>
+            <h1>{}</h1>
             <p>Item ID: {id}</p>
         </Container>
     )
