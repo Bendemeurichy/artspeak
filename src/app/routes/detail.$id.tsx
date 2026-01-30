@@ -5,12 +5,20 @@ import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { useLoaderData, useNavigate } from "react-router";
+import { MetaFunction, useLoaderData, useNavigate } from "react-router";
 
 import backgroundImage from "../../assets/brick_wall.png";
 import { GalleryItem } from "../types/GalleryItem.ts";
 import { GalleryItemLoader } from "../functions/LoadGalleryItem.ts";
 import { Alert, Button, Container } from "@mui/material";
+
+export const meta: MetaFunction = () => [
+	{ title: "Detail | ArtSpeak" },
+	{
+		name: "description",
+		content: "Browse items from the overview JSON feed.",
+	},
+];
 
 export const loader = GalleryItemLoader;
 
@@ -45,7 +53,10 @@ export default function OverviewDetailRoute() {
 			<Card sx={{ display: "flex" }}>
 				<Box sx={{ display: "flex", flexDirection: "column" }}>
 					<CardContent sx={{ flex: "1 0 auto", width: 200 }}>
-						<Typography component="div" variant="h5" sx={{ textAlign: "center" }}>
+						<Typography
+							component="div"
+							variant="h5"
+							sx={{ textAlign: "center" }}>
 							{item.name}
 						</Typography>
 					</CardContent>
