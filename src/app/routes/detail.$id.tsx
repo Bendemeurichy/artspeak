@@ -11,7 +11,7 @@ import backgroundImage from "../../assets/brick_wall.png";
 import { GalleryItem } from "../types/GalleryItem.ts";
 import { GalleryItemLoader } from "../functions/LoadGalleryItem.ts";
 import { Alert, Button, Container } from "@mui/material";
-import TTS from "../components/tts/tts.tsx";
+import AudioPlayer from "../components/tts/audioPlayer.tsx";
 
 export const meta: MetaFunction = () => [
   { title: "Detail | ArtSpeak" },
@@ -84,7 +84,7 @@ export default function OverviewDetailRoute() {
           alt={item.name}
         />
       </Card>
-      <TTS word={item.name} />
+      <AudioPlayer word={item.name} path={item.audioPath} />
     </Container>
   );
 }

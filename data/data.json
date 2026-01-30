@@ -2,7 +2,8 @@
   {
     "id": 1,
     "name": "schildersezel",
-    "imagePath": "https://images.icon-icons.com/1143/PNG/512/painteaseloutlineartistictool_80738.png"
+    "imagePath": "https://images.icon-icons.com/1143/PNG/512/painteaseloutlineartistictool_80738.png",
+    "audioPath": "/data/audio/Schildersezel.mp3"
   },
   {
     "id": 2,
