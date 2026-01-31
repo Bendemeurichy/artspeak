@@ -29,7 +29,7 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export const loader = GalleryLoader;
+export const clientLoader = GalleryLoader;
 
 export default function OverviewRoute() {
   const { items } = useLoaderData() as GalleryLoaderData;
@@ -88,19 +88,6 @@ export default function OverviewRoute() {
             </ListItem>
           ))}
         </List>
-      </Stack>
-    </Container>
-  );
-}
-
-export function HydrateFallback() {
-  return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Stack alignItems="center">
-        <CircularProgress />
-        <Typography variant="body2" sx={{ mt: 2 }}>
-          Loading data...
-        </Typography>
       </Stack>
     </Container>
   );
