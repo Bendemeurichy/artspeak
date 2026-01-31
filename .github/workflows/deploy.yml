@@ -41,7 +41,18 @@ jobs:
         run: deno task build
 
       - name: Copy data to dist
-        run: cp -r data dist/
+        run: cp -r data build/client/
+
+      - name: List build output
+        run: |
+          echo "=== Contents of build/client/ ==="
+          ls -lah build/client/
+          echo ""
+          echo "=== Contents of build/client/data/ ==="
+          ls -lah build/client/data/ || echo "No data folder found!"
+          echo ""
+          echo "=== index.html exists? ==="
+          test -f build/client/index.html && echo "✓ index.html found" || echo "✗ index.html NOT found"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -49,7 +60,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dist"
+          path: "./build/client"
 
   deploy:
     environment:
