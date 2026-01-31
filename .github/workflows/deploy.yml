@@ -34,8 +34,8 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Install dependencies
-        run: deno install
+      # - name: Install dependencies
+      #   run: deno install
 
       - name: Build
         run: deno task build
