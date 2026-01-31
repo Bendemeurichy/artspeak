@@ -1,12 +1,8 @@
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { MetaFunction, useLoaderData, useNavigate } from "react-router";
 
+import Grid from "@mui/material/Grid";
 import backgroundImage from "../../assets/brick_wall.png";
 import { GalleryItem } from "../types/GalleryItem.ts";
 import { GalleryItemLoader } from "../functions/LoadGalleryItem.ts";
@@ -37,7 +33,7 @@ export default function OverviewDetailRoute() {
   }
 
   return (
-    <Container
+    <Grid
       maxWidth="md"
       sx={{
         py: 4,
@@ -46,45 +42,31 @@ export default function OverviewDetailRoute() {
         backgroundRepeat: "repeat",
         backgroundSize: "auto",
         color: "white",
+        padding: 2,
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
       }}
     >
-      <Button onClick={() => navigate(-1)} variant="contained">
+      <Button
+        onClick={() => navigate(-1)}
+        variant="contained"
+        size="large"
+        sx={{ width: "fit-content" }}
+      >
         Back
       </Button>
-      <h1>{item.name ?? "Error loading name"}</h1>
-      <Card sx={{ display: "flex" }}>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <CardContent sx={{ flex: "1 0 auto", width: 200 }}>
-            <Typography
-              component="div"
-              variant="h5"
-              sx={{ textAlign: "center" }}
-            >
-              {item.name}
-            </Typography>
-          </CardContent>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              pl: 1,
-              pb: 1,
-            }}
-          >
-            <IconButton aria-label="play/pause">
-              <PlayArrowIcon sx={{ height: 50, width: 50 }} />
-            </IconButton>
-          </Box>
-        </Box>
-        <CardMedia
-          component="img"
-          sx={{ width: 150, padding: 2 }}
-          image={item.imagePath}
-          alt={item.name}
-        />
-      </Card>
-      <AudioPlayer word={item.name} path={item.audioPath} />
-    </Container>
+      <Box>
+        {item.audioPath ? (
+          <AudioPlayer
+            word={item.name}
+            img={item.imagePath}
+            path={item.audioPath}
+          />
+        ) : (
+          <Typography variant="h1">"Error loading item"</Typography>
+        )}
+      </Box>
+    </Grid>
   );
 }

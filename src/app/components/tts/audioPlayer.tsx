@@ -10,6 +10,7 @@ import {
   Slider,
   Alert,
   CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import {
   PlayArrow,
@@ -22,10 +23,11 @@ import {
 
 interface AudioPlayerProps {
   word: string;
+  img: string;
   path: string;
 }
 
-export default function AudioPlayer({ word, path }: AudioPlayerProps) {
+export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -161,35 +163,58 @@ export default function AudioPlayer({ word, path }: AudioPlayerProps) {
 
   if (!isMounted) {
     return (
-      <Card sx={{ display: "flex", maxWidth: 600 }}>
-        <CardMedia
+      <Card
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "90vw",
+          height: "80vh",
+          maxWidth: "90vw",
+          maxHeight: "80vh",
+          borderRadius: 4,
+        }}
+      >
+        <Box
           sx={{
-            width: 151,
+            height: "70%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+          }}
+        >
+          <Skeleton
+            variant="rectangular"
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "background.paper",
+            }}
+          />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
             backgroundColor: "primary.main",
           }}
         >
-          <Typography variant="h3" color="primary.contrastText">
-            🎵
-          </Typography>
-        </CardMedia>
-        <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
             <Typography component="div" variant="h5">
               {word}
             </Typography>
-            <Typography
-              variant="subtitle1"
-              component="div"
-              sx={{ color: "text.secondary" }}
-            >
-              Audio Pronunciation
-            </Typography>
           </CardContent>
-          <Box sx={{ display: "flex", alignItems: "center", px: 2, pb: 1 }}>
-            <CircularProgress size={32} sx={{ mx: "auto" }} />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              px: 2,
+              pb: 1,
+            }}
+          >
+            <CircularProgress sx={{ color: "background.paper" }} size={32} />
           </Box>
         </Box>
       </Card>
@@ -197,31 +222,43 @@ export default function AudioPlayer({ word, path }: AudioPlayerProps) {
   }
 
   return (
-    <Card sx={{ display: "flex", maxWidth: 600 }}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "90vw",
+        height: "80vh",
+        maxWidth: "90vw",
+        maxHeight: "80vh",
+        borderRadius: 4,
+      }}
+    >
       <CardMedia
         sx={{
-          width: 151,
+          height: "70%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          px: 2,
+          my: 2,
+        }}
+        image={img}
+        title={word}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
           backgroundColor: "primary.main",
         }}
       >
-        <Typography variant="h3" color="primary.contrastText">
-          🎵
-        </Typography>
-      </CardMedia>
-      <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
             {word}
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            component="div"
-            sx={{ color: "text.secondary" }}
-          >
-            Audio Pronunciation
           </Typography>
         </CardContent>
 
@@ -231,38 +268,18 @@ export default function AudioPlayer({ word, path }: AudioPlayerProps) {
           </Box>
         )}
 
-        <Box sx={{ display: "flex", alignItems: "center", px: 2, pb: 1 }}>
-          <IconButton
-            aria-label="previous"
-            onClick={skipBackward}
-            disabled={isLoading || !!error}
-          >
-            <SkipPrevious />
-          </IconButton>
-          <IconButton
-            aria-label={isPlaying ? "pause" : "play"}
-            onClick={togglePlay}
-            disabled={isLoading || !!error}
-            sx={{ mx: 1 }}
-          >
-            {isLoading ? (
-              <CircularProgress size={32} />
-            ) : isPlaying ? (
-              <Pause sx={{ height: 38, width: 38 }} />
-            ) : (
-              <PlayArrow sx={{ height: 38, width: 38 }} />
-            )}
-          </IconButton>
-          <IconButton
-            aria-label="next"
-            onClick={skipForward}
-            disabled={isLoading || !!error}
-          >
-            <SkipNext />
-          </IconButton>
-
-          <Box sx={{ flex: 1, mx: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            px: 2,
+            pb: 1,
+          }}
+        >
+          <Box sx={{ flex: 1, mx: 2, width: "70%" }}>
             <Slider
+              sx={{ color: "text.primary" }}
               value={currentTime}
               max={duration || 100}
               onChange={handleSliderChange}
@@ -285,27 +302,35 @@ export default function AudioPlayer({ word, path }: AudioPlayerProps) {
               </Typography>
             </Box>
           </Box>
-
-          <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
             <IconButton
-              aria-label={isMuted ? "unmute" : "mute"}
-              onClick={toggleMute}
+              aria-label="previous"
+              onClick={skipBackward}
               disabled={isLoading || !!error}
-              size="small"
             >
-              {isMuted ? <VolumeOff /> : <VolumeUp />}
+              <SkipPrevious />
             </IconButton>
-            <Slider
-              value={isMuted ? 0 : volume}
-              min={0}
-              max={1}
-              step={0.01}
-              onChange={handleVolumeChange}
-              aria-label="Volume"
+            <IconButton
+              aria-label={isPlaying ? "pause" : "play"}
+              onClick={togglePlay}
               disabled={isLoading || !!error}
-              sx={{ width: 80 }}
-              size="small"
-            />
+              sx={{ mx: 1 }}
+            >
+              {isLoading ? (
+                <CircularProgress size={32} />
+              ) : isPlaying ? (
+                <Pause sx={{ height: 38, width: 38 }} />
+              ) : (
+                <PlayArrow sx={{ height: 38, width: 38 }} />
+              )}
+            </IconButton>
+            <IconButton
+              aria-label="next"
+              onClick={skipForward}
+              disabled={isLoading || !!error}
+            >
+              <SkipNext />
+            </IconButton>
           </Box>
         </Box>
       </Box>
