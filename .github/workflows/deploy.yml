@@ -43,6 +43,9 @@ jobs:
       - name: Copy data to dist
         run: cp -r data build/client/
 
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp build/client/index.html build/client/404.html
+
       - name: List build output
         run: |
           echo "=== Contents of build/client/ ==="

@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export const loader = GalleryItemLoader;
+export const clientLoader = GalleryItemLoader;
 
 export default function OverviewDetailRoute() {
   const navigate = useNavigate();
