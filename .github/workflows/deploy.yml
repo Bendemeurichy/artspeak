@@ -43,7 +43,7 @@ jobs:
       - name: Copy data to dist
         run: |
           mkdir -p build/client/data
-          rsync -av --exclude='.git' data/ build/client/data/
+          rsync -av --exclude='.git' data/data/ build/client/data/
 
       - name: Copy index.html to 404.html for SPA routing
         run: cp build/client/index.html build/client/404.html
@@ -58,6 +58,24 @@ jobs:
           echo ""
           echo "=== index.html exists? ==="
           test -f build/client/index.html && echo "✓ index.html found" || echo "✗ index.html NOT found"
+          echo ""
+          echo "=== 404.html exists? ==="
+          test -f build/client/404.html && echo "✓ 404.html found" || echo "✗ 404.html NOT found"
+          echo ""
+          echo "=== Are index.html and 404.html identical? ==="
+          if [ -f build/client/index.html ] && [ -f build/client/404.html ]; then
+            if cmp -s build/client/index.html build/client/404.html; then
+              echo "✓ Files are identical"
+            else
+              echo "✗ Files are DIFFERENT"
+            fi
+          fi
+          echo ""
+          echo "=== First 20 lines of index.html ==="
+          head -n 20 build/client/index.html || echo "Could not read index.html"
+          echo ""
+          echo "=== First 20 lines of 404.html ==="
+          head -n 20 build/client/404.html || echo "Could not read 404.html"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
