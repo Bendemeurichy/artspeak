@@ -66,9 +66,14 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
     const handleEnded = () => {
       setIsPlaying(false);
       setCurrentTime(0);
-      if (audioRef.current) {
-        audioRef.current.currentTime = 0;
-      }
+    };
+
+    const handlePause = () => {
+      setIsPlaying(false);
+    };
+
+    const handlePlay = () => {
+      setIsPlaying(true);
     };
 
     const handleCanPlay = () => {
@@ -99,6 +104,8 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
     audio.addEventListener("durationchange", handleDurationChange);
     audio.addEventListener("timeupdate", setAudioTime);
     audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("pause", handlePause);
+    audio.addEventListener("play", handlePlay);
     audio.addEventListener("canplay", handleCanPlay);
     audio.addEventListener("error", handleError);
     audio.addEventListener("loadstart", handleLoadStart);
@@ -110,6 +117,8 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
       audio.removeEventListener("durationchange", handleDurationChange);
       audio.removeEventListener("timeupdate", setAudioTime);
       audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("pause", handlePause);
+      audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("canplay", handleCanPlay);
       audio.removeEventListener("error", handleError);
       audio.removeEventListener("loadstart", handleLoadStart);
@@ -125,10 +134,12 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
     try {
       if (isPlaying) {
         audioRef.current.pause();
-        setIsPlaying(false);
       } else {
+        // Reset to beginning if audio has ended
+        if (audioRef.current.ended) {
+          audioRef.current.currentTime = 0;
+        }
         await audioRef.current.play();
-        setIsPlaying(true);
       }
     } catch (err) {
       console.error("Error playing audio:", err);

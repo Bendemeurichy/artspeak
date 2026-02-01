@@ -27,7 +27,7 @@ export default function IndexRoute() {
       }}
     >
       <Box sx={{ padding: 10 }}>
-        <motion.h1
+        <motion.h2
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: -50, opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeInOut" }}
@@ -36,8 +36,8 @@ export default function IndexRoute() {
             margin: 0,
           }}
         >
-          Welcome in het museum van 3A/3B.
-        </motion.h1>
+          Welkom in het museum van 3A/3B.
+        </motion.h2>
       </Box>
       <Box
         sx={{
