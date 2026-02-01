@@ -21,7 +21,7 @@ import { GalleryLoaderData } from "../types/GalleryLoaderData.ts";
 import { GalleryLoader } from "../functions/LoadGallery.ts";
 
 export const meta: MetaFunction = () => [
-  { title: "Overview | ArtSpeak" },
+  { title: "Overview | 'Museum 3A/3B'" },
   {
     name: "description",
     content: "Browse items from the overview JSON feed.",
