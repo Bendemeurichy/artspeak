@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from "react";
 import {
   Card,
   CardContent,
-  CardMedia,
   IconButton,
   Typography,
   Box,
@@ -12,14 +11,7 @@ import {
   CircularProgress,
   Skeleton,
 } from "@mui/material";
-import {
-  PlayArrow,
-  Pause,
-  VolumeUp,
-  VolumeOff,
-  SkipPrevious,
-  SkipNext,
-} from "@mui/icons-material";
+import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@mui/icons-material";
 
 interface AudioPlayerProps {
   word: string;
@@ -148,11 +140,19 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
       if (isPlaying) {
         audio.pause();
       } else {
-        // If audio has ended, ensure it's reset
+        // If audio has ended, reload it for Firefox 206 range request issue
         if (audio.ended) {
           audio.currentTime = 0;
-          // Give Firefox time to process the reset
-          await new Promise((resolve) => setTimeout(resolve, 50));
+          // Force reload to reset Firefox's range request cache
+          audio.load();
+          // Wait for audio to be ready
+          await new Promise<void>((resolve) => {
+            const onCanPlay = () => {
+              audio.removeEventListener("canplay", onCanPlay);
+              resolve();
+            };
+            audio.addEventListener("canplay", onCanPlay);
+          });
         }
 
         await audio.play();
