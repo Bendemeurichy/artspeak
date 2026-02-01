@@ -9,8 +9,7 @@ import {
   Alert,
   Card,
   CardContent,
-  CardMedia,
-  CircularProgress,
+  Box,
   Container,
   List,
   ListItem,
@@ -80,16 +79,26 @@ export default function OverviewRoute() {
                 component={Link}
                 to={`/detail/${item.id}`}
               >
-                <CardMedia
-                  component="img"
+                <Box
                   sx={{
                     height: 250,
-                    objectFit: "contain",
-                    padding: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    p: 2,
                   }}
-                  image={item.imagePath}
-                  alt={item.name}
-                />
+                >
+                  <Box
+                    component="img"
+                    src={item.imagePath}
+                    alt={item.name}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {item.name}

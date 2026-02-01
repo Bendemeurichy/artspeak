@@ -62,6 +62,9 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
     const handleEnded = () => {
       setIsPlaying(false);
       setCurrentTime(0);
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+      }
     };
 
     const handleCanPlay = () => {
@@ -233,21 +236,26 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
         borderRadius: 4,
       }}
     >
-      <CardMedia
+      <Box
         sx={{
           height: "70%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          px: 2,
-          my: 2,
+          p: 2,
         }}
-        image={img}
-        title={word}
-      />
+      >
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            backgroundImage: `url(${img})`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+        />
+      </Box>
       <Box
         sx={{
           display: "flex",
