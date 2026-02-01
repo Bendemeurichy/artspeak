@@ -17,12 +17,20 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export const clientLoader = GalleryItemLoader;
+export const loader = GalleryItemLoader;
 
 export default function OverviewDetailRoute() {
   const navigate = useNavigate();
 
   const { item } = useLoaderData() as { item: GalleryItem };
+
+  // Add base URL to audio path if it exists and doesn't already have it
+  const audioPath = item.audioPath
+    ? item.audioPath.startsWith("http") ||
+      item.audioPath.startsWith(import.meta.env.BASE_URL || "/")
+      ? item.audioPath
+      : `${import.meta.env.BASE_URL || "/"}${item.audioPath.startsWith("/") ? item.audioPath.slice(1) : item.audioPath}`
+    : undefined;
 
   if (!item) {
     return (
@@ -57,12 +65,8 @@ export default function OverviewDetailRoute() {
         Back
       </Button>
       <Box>
-        {item.audioPath ? (
-          <AudioPlayer
-            word={item.name}
-            img={item.imagePath}
-            path={item.audioPath}
-          />
+        {audioPath ? (
+          <AudioPlayer word={item.name} img={item.imagePath} path={audioPath} />
         ) : (
           <Typography variant="h1">"Error loading item"</Typography>
         )}

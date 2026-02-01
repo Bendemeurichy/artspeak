@@ -29,7 +29,7 @@ export const meta: MetaFunction = () => [
   },
 ];
 
-export const clientLoader = GalleryLoader;
+export const loader = GalleryLoader;
 
 export default function OverviewRoute() {
   const { items } = useLoaderData() as GalleryLoaderData;

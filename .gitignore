@@ -26,3 +26,4 @@ dist-ssr
 
 # data directory
 data/
+build/

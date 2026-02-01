@@ -23,6 +23,7 @@ export default function IndexRoute() {
         height: "100vh",
         minHeight: "100vh",
         overflow: "hidden",
+        backgroundColor: "background.paper",
       }}
     >
       <Box sx={{ padding: 10 }}>
@@ -89,12 +90,12 @@ export default function IndexRoute() {
           <motion.img
             src={ticketImageLeft}
             alt="ticket"
-            style={{ pointerEvents: "none" , width: "50%", height: "auto"}}
+            style={{ pointerEvents: "none", width: "50%", height: "auto" }}
           />
           <motion.img
             src={ticketImageRight}
             alt="ticket"
-            style={{ pointerEvents: "none" , width: "21%", height: "auto"}}
+            style={{ pointerEvents: "none", width: "21%", height: "auto" }}
             animate={
               isRouting
                 ? { x: 250, rotate: 10, opacity: 0 }
