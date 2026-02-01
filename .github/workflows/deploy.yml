@@ -41,7 +41,9 @@ jobs:
         run: deno task build
 
       - name: Copy data to dist
-        run: cp -r data build/client/
+        run: |
+          mkdir -p build/client/data
+          rsync -av --exclude='.git' data/ build/client/data/
 
       - name: Copy index.html to 404.html for SPA routing
         run: cp build/client/index.html build/client/404.html
