@@ -9,7 +9,7 @@ import ticketImageLeft from "../../assets/tickets_left.png";
 import ticketImageRight from "../../assets/tickets_right.png";
 
 export const meta: MetaFunction = () => [
-  { title: "ArtSpeak" },
+  { title: "Museum 3A/3B" },
   { name: "description", content: "Learn to pronounce art terms." },
 ];
 
@@ -36,7 +36,7 @@ export default function IndexRoute() {
             margin: 0,
           }}
         >
-          Welcome to ArtSpeak
+          Welcome in het museum van 3A/3B.
         </motion.h1>
       </Box>
       <Box

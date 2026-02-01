@@ -10,7 +10,7 @@ import { Alert, Button, Container } from "@mui/material";
 import AudioPlayer from "../components/tts/audioPlayer.tsx";
 
 export const meta: MetaFunction = () => [
-  { title: "Detail | ArtSpeak" },
+  { title: "Detail | 'Museum 3A/3B'" },
   {
     name: "description",
     content: "Browse items from the overview JSON feed.",

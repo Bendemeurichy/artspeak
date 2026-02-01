@@ -51,12 +51,16 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
     audioRef.current = audio;
 
     const setAudioData = () => {
-      setDuration(audio.duration);
-      setIsLoading(false);
+      if (audio.duration && isFinite(audio.duration)) {
+        setDuration(audio.duration);
+        setIsLoading(false);
+      }
     };
 
     const setAudioTime = () => {
-      setCurrentTime(audio.currentTime);
+      if (isFinite(audio.currentTime)) {
+        setCurrentTime(audio.currentTime);
+      }
     };
 
     const handleEnded = () => {
@@ -69,6 +73,16 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
 
     const handleCanPlay = () => {
       setIsLoading(false);
+      // Double-check duration is available
+      if (audio.duration && isFinite(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
+
+    const handleDurationChange = () => {
+      if (audio.duration && isFinite(audio.duration)) {
+        setDuration(audio.duration);
+      }
     };
 
     const handleError = () => {
@@ -82,6 +96,7 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
     };
 
     audio.addEventListener("loadedmetadata", setAudioData);
+    audio.addEventListener("durationchange", handleDurationChange);
     audio.addEventListener("timeupdate", setAudioTime);
     audio.addEventListener("ended", handleEnded);
     audio.addEventListener("canplay", handleCanPlay);
@@ -92,13 +107,15 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
 
     return () => {
       audio.removeEventListener("loadedmetadata", setAudioData);
+      audio.removeEventListener("durationchange", handleDurationChange);
       audio.removeEventListener("timeupdate", setAudioTime);
       audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("canplay", handleCanPlay);
       audio.removeEventListener("error", handleError);
       audio.removeEventListener("loadstart", handleLoadStart);
       audio.pause();
-      audio.src = "";
+      audio.removeAttribute("src");
+      audio.load();
     };
   }, [path, isMounted]);
 
@@ -158,7 +175,7 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
   };
 
   const formatTime = (time: number) => {
-    if (isNaN(time)) return "0:00";
+    if (!isFinite(time) || isNaN(time) || time < 0) return "0:00";
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
@@ -289,10 +306,12 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
             <Slider
               sx={{ color: "text.primary" }}
               value={currentTime}
-              max={duration || 100}
+              max={duration && isFinite(duration) ? duration : 100}
               onChange={handleSliderChange}
               aria-label="Time"
-              disabled={isLoading || !!error}
+              disabled={
+                isLoading || !!error || !duration || !isFinite(duration)
+              }
               size="small"
             />
             <Box
