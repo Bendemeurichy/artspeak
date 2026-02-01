@@ -46,7 +46,8 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
     if (!isMounted) return;
 
     const audio = new Audio();
-    audio.preload = "metadata";
+    // Force full preload to avoid Firefox range request issues
+    audio.preload = "auto";
     audio.src = path;
     audioRef.current = audio;
 
@@ -65,6 +66,8 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
 
     const handleEnded = () => {
       setIsPlaying(false);
+      // Reset position for replay
+      audio.currentTime = 0;
       setCurrentTime(0);
     };
 
@@ -90,8 +93,13 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
       }
     };
 
-    const handleError = () => {
-      setError(`Failed to load audio file: ${path}`);
+    const handleError = (e: Event) => {
+      const target = e.target as HTMLAudioElement;
+      const errorDetails = target.error
+        ? `Code: ${target.error.code}`
+        : "Unknown error";
+      console.error("Audio error:", errorDetails, "Path:", path);
+      setError(`Failed to load audio file. ${errorDetails}`);
       setIsLoading(false);
     };
 
@@ -122,28 +130,36 @@ export default function AudioPlayer({ word, img, path }: AudioPlayerProps) {
       audio.removeEventListener("canplay", handleCanPlay);
       audio.removeEventListener("error", handleError);
       audio.removeEventListener("loadstart", handleLoadStart);
+
+      // Clean up
       audio.pause();
-      audio.removeAttribute("src");
-      audio.load();
+      audio.src = "";
+      if (audioRef.current === audio) {
+        audioRef.current = null;
+      }
     };
   }, [path, isMounted]);
 
   const togglePlay = async () => {
-    if (!audioRef.current || isLoading) return;
+    const audio = audioRef.current;
+    if (!audio || isLoading) return;
 
     try {
       if (isPlaying) {
-        audioRef.current.pause();
+        audio.pause();
       } else {
-        // Reset to beginning if audio has ended
-        if (audioRef.current.ended) {
-          audioRef.current.currentTime = 0;
+        // If audio has ended, ensure it's reset
+        if (audio.ended) {
+          audio.currentTime = 0;
+          // Give Firefox time to process the reset
+          await new Promise((resolve) => setTimeout(resolve, 50));
         }
-        await audioRef.current.play();
+
+        await audio.play();
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error playing audio:", err);
-      setError("Failed to play audio");
+      setError(`Failed to play audio: ${err.message || "Unknown error"}`);
       setIsPlaying(false);
     }
   };
