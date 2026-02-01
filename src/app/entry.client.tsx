@@ -15,16 +15,47 @@ import { useRouteError, isRouteErrorResponse } from "react-router";
 function ErrorBoundary() {
   const error = useRouteError();
 
-  const message = isRouteErrorResponse(error)
-    ? error.statusText
-    : error instanceof Error
-      ? error.message
-      : "Unknown error";
+  console.error("Route error:", error);
+
+  let message: string;
+  let details: string | undefined;
+  let stack: string | undefined;
+
+  if (isRouteErrorResponse(error)) {
+    message = `${error.status} ${error.statusText}`;
+    details = error.data?.message || JSON.stringify(error.data);
+  } else if (error instanceof Error) {
+    message = error.message;
+    stack = error.stack;
+  } else {
+    message = "Unknown error";
+    details = JSON.stringify(error);
+  }
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Alert severity="error">
-        <strong>Error:</strong> {message}
+        <div>
+          <strong>Error:</strong> {message}
+        </div>
+        {details && (
+          <div style={{ marginTop: "8px", fontSize: "0.9em" }}>
+            <strong>Details:</strong> {details}
+          </div>
+        )}
+        {stack && (
+          <pre
+            style={{ marginTop: "8px", fontSize: "0.8em", overflow: "auto" }}
+          >
+            {stack}
+          </pre>
+        )}
+        <div style={{ marginTop: "8px", fontSize: "0.9em" }}>
+          <strong>Current URL:</strong> {window.location.href}
+        </div>
+        <div style={{ marginTop: "4px", fontSize: "0.9em" }}>
+          <strong>Base URL:</strong> {import.meta.env.BASE_URL || "/"}
+        </div>
       </Alert>
     </Container>
   );

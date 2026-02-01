@@ -32,6 +32,14 @@ export default function OverviewDetailRoute() {
       : `${import.meta.env.BASE_URL || "/"}${item.audioPath.startsWith("/") ? item.audioPath.slice(1) : item.audioPath}`
     : undefined;
 
+  // Add base URL to image path if it exists and doesn't already have it
+  const imagePath = item.imagePath
+    ? item.imagePath.startsWith("http") ||
+      item.imagePath.startsWith(import.meta.env.BASE_URL || "/")
+      ? item.imagePath
+      : `${import.meta.env.BASE_URL || "/"}${item.imagePath.startsWith("/") ? item.imagePath.slice(1) : item.imagePath}`
+    : undefined;
+
   if (!item) {
     return (
       <Container maxWidth="md" sx={{ py: 4 }}>
@@ -65,8 +73,8 @@ export default function OverviewDetailRoute() {
         Back
       </Button>
       <Box>
-        {audioPath ? (
-          <AudioPlayer word={item.name} img={item.imagePath} path={audioPath} />
+        {audioPath && imagePath ? (
+          <AudioPlayer word={item.name} img={imagePath} path={audioPath} />
         ) : (
           <Typography variant="h1">"Error loading item"</Typography>
         )}

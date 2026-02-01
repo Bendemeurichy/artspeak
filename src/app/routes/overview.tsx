@@ -42,6 +42,17 @@ export default function OverviewRoute() {
     );
   }
 
+  // Process image paths to add base URL
+  const processedItems = items.map((item) => ({
+    ...item,
+    imagePath: item.imagePath
+      ? item.imagePath.startsWith("http") ||
+        item.imagePath.startsWith(import.meta.env.BASE_URL || "/")
+        ? item.imagePath
+        : `${import.meta.env.BASE_URL || "/"}${item.imagePath.startsWith("/") ? item.imagePath.slice(1) : item.imagePath}`
+      : undefined,
+  }));
+
   return (
     <Container
       maxWidth="md"
@@ -57,7 +68,7 @@ export default function OverviewRoute() {
           Galerij
         </Typography>
         <List>
-          {items.map((item) => (
+          {processedItems.map((item) => (
             <ListItem key={item.id} divider sx={{ width: "100%" }}>
               <Card
                 sx={{
